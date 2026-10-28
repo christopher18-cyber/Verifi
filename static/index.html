@@ -3,97 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scam & Fraud Message Defense Assistant</title>
+    <title>Scam Check - Hybrid AI Defense</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="/static/style.css">
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between font-sans">
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between font-sans">
 
     <!-- Header -->
-    <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur sticky top-0 z-10">
-        <div class="max-w-4xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="bg-red-500/10 border border-red-500/20 text-red-400 p-2 rounded-xl">
-                    🛡️
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold tracking-tight">Scam & Fraud Defense</h1>
-                    <p class="text-xs text-slate-400">Hybrid Rules + AI Threat Analyzer</p>
-                </div>
+    <header class="border-b border-slate-200 bg-white sticky top-0 z-10 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+            <div>
+                <h1 class="text-xl font-extrabold tracking-tight text-slate-900">Scam check</h1>
+                <p class="text-xs text-slate-500">Paste a suspicious SMS, WhatsApp message or email. Rules find the red flags first, then the verdict explains them in plain words.</p>
             </div>
-            <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full font-medium">
-                System Active
+            <span class="text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1 rounded-full font-semibold">
+                OPEN//BUILD 2026
             </span>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 py-8 w-full flex-grow">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <main class="max-w-5xl mx-auto px-4 py-8 w-full flex-grow">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 
-            <!-- Input Form Section -->
-            <div class="md:col-span-1 space-y-4">
-                <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl">
-                    <h2 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-3">Analyze Message</h2>
+            <!-- Left Column: Input Form & Sample Buttons -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+                <h2 class="text-sm font-bold text-slate-700 uppercase tracking-wider">Message to check</h2>
 
-                    <form id="scan-form" class="space-y-4">
-                        <div>
-                            <label for="message-input" class="block text-xs text-slate-400 mb-1">Paste suspicious SMS, WhatsApp, or loan alert:</label>
-                            <textarea
-                                id="message-input"
-                                rows="5"
-                                required
-                                placeholder="e.g. CONGRATULATIONS! Your loan of N200,000 has been approved. Click link to claim..."
-                                class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:outline-none focus:border-indigo-500 transition resize-none"></textarea>
+                <form id="scan-form" class="space-y-4">
+                    <div>
+                        <textarea
+                            id="message-input"
+                            rows="5"
+                            required
+                            placeholder="Paste suspicious message here..."
+                            class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-indigo-600 transition resize-none"></textarea>
+                    </div>
+
+                    <!-- Language & Submit Row -->
+                    <div class="flex items-center justify-between gap-2">
+                        <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-medium">
+                            <button type="button" class="lang-btn px-3 py-1.5 rounded-lg bg-white shadow-sm text-slate-900" data-lang="en">English</button>
+                            <button type="button" class="lang-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900" data-lang="pidgin">Pidgin</button>
                         </div>
-
                         <button
                             type="submit"
                             id="submit-btn"
-                            class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-4 rounded-xl transition duration-200 flex items-center justify-center space-x-2 text-sm shadow-lg shadow-indigo-600/20">
-                            <span>Scan Threat</span>
+                            class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-6 rounded-xl transition duration-200 text-sm shadow-md">
+                            Check message
                         </button>
-                    </form>
+                    </div>
+                </form>
+
+                <!-- Sample Buttons -->
+                <div class="space-y-2 pt-2 border-t border-slate-100">
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Try sample messages:</p>
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200 transition" data-msg="GTBank Alert: Your account has been suspended. Verify your BVN and OTP within 24 hours: http://gtb-secure-verify.xyz/login">Fake bank alert</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200 transition" data-msg="CONGRATULATIONS! Your loan of N200,000 has been approved instantly without collateral. Click here to claim now: https://quickcash-ng.live">Loan-app threat</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200 transition" data-msg="Debit alert: N5,000.00 left your account on 24-Oct. Never share your OTP or PIN with anyone, including bank staff.">Genuine alert</button>
+                    </div>
                 </div>
+
+                <p class="text-[11px] text-slate-400">Your message is sent to our server and AI service to be checked. It is not stored. Never paste real PINs, OTPs or passwords.</p>
             </div>
 
-            <!-- Results Section -->
-            <div class="md:col-span-2">
-                <div id="result-container" class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl h-full flex flex-col justify-center items-center text-center text-slate-500">
-                    <div class="text-4xl mb-3">🔍</div>
-                    <p class="text-sm">Paste a message on the left and click <strong>Scan Threat</strong> to run hybrid rule & AI verification.</p>
-                </div>
+            <!-- Right Column: Pipeline Breakdown & Verdict -->
+            <div class="space-y-6">
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h2 class="text-sm font-bold text-slate-700 uppercase tracking-wider">What the checker does</h2>
+                        <span id="verdict-pill" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-500">Waiting for scan</span>
+                    </div>
 
-                <!-- Actual Result Card (Hidden by default) -->
-                <div id="threat-card" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
-                    <div class="flex items-center justify-between border-b border-slate-800 pb-4">
-                        <div>
-                            <span id="verdict-badge" class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide"></span>
+                    <!-- Pipeline Steps List -->
+                    <div id="pipeline-steps" class="space-y-4 text-sm">
+                        <div class="flex items-start space-x-3 text-slate-400">
+                            <span class="text-lg">⚪</span>
+                            <div>
+                                <p class="font-semibold text-slate-700">Clean the message</p>
+                                <p class="text-xs text-slate-500">Trimmed spaces and kept a working copy</p>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <span class="text-xs text-slate-400">Confidence Score</span>
-                            <p id="confidence-score" class="text-lg font-bold text-slate-200"></p>
+                        <div class="flex items-start space-x-3 text-slate-400">
+                            <span class="text-lg">⚪</span>
+                            <div>
+                                <p class="font-semibold text-slate-700">Find signals & rules</p>
+                                <p class="text-xs text-slate-500">Deterministic checks for urgency, links, and sensitive info</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 text-slate-400">
+                            <span class="text-lg">⚪</span>
+                            <div>
+                                <p class="font-semibold text-slate-700">Model second opinion (Groq AI)</p>
+                                <p class="text-xs text-slate-500">Contextual analysis for advanced social engineering</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 text-slate-400">
+                            <span class="text-lg">⚪</span>
+                            <div>
+                                <p class="font-semibold text-slate-700">Merge into a verdict</p>
+                                <p class="text-xs text-slate-500">Final threat evaluation and risk score</p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Reason / Explanation -->
-                    <div class="space-y-2 text-left">
-                        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Analysis Breakdown</h3>
-                        <p id="analysis-reason" class="text-sm text-slate-300 leading-relaxed bg-slate-950 p-4 rounded-xl border border-slate-800/60"></p>
-                    </div>
-
-                    <!-- Triggered Rules -->
-                    <div id="rules-section" class="space-y-2 text-left hidden">
-                        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Triggered Risk Rules</h3>
-                        <div id="rules-list" class="flex flex-wrap gap-2"></div>
-                    </div>
-
-                    <!-- Suspicious Quotes -->
-                    <div id="quotes-section" class="space-y-2 text-left hidden">
-                        <h3 class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Flagged Phrases</h3>
-                        <div id="quotes-list" class="space-y-1"></div>
+                    <!-- Detailed Flags & Rules Result Area -->
+                    <div id="details-box" class="hidden border-t border-slate-100 pt-4 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-600 uppercase">Triggered Rules / Flags</span>
+                            <span id="score-badge" class="text-xs font-mono font-bold px-2 py-0.5 rounded"></span>
+                        </div>
+                        <div id="flags-container" class="space-y-2"></div>
+                        <p id="reason-text" class="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200 leading-relaxed"></p>
                     </div>
                 </div>
             </div>
@@ -102,11 +125,10 @@
     </main>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-slate-900/30 py-4 text-center text-xs text-slate-500">
-        <p>OPEN//BUILD 2026 Hackathon • Secured with Hybrid Rules & Groq LLM Inference</p>
+    <footer class="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-400">
+        <p>OPEN//BUILD 2026 Hackathon • Hybrid Rules & Groq LLM Inference</p>
     </footer>
 
-    <!-- Frontend Controller Script -->
     <script src="/static/app.js"></script>
 </body>
 </html>
