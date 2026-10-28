@@ -1,0 +1,6 @@
+langgraph
+langchain
+lnagchain-huggingface
+pydantic
+python-dotenv
+pytest
