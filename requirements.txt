@@ -4,3 +4,4 @@ lnagchain-huggingface
 pydantic
 python-dotenv
 pytest
+openai
