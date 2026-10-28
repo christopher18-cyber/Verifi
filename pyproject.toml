@@ -7,6 +7,7 @@ dependencies = [
     "langchain>=1.4.7",
     "langchain-huggingface>=1.2.3",
     "langgraph>=1.2.18",
+    "openai>=3.40.0",
     "pydantic>=2.14.1",
     "python-dotenv>=1.2.4",
     "uvicorn[standard]>=0.54.0",
@@ -16,3 +17,5 @@ dependencies = [
 dev = [
     "pytest>=9.2.0",
 ]
+[tool.pytest.ini_options]
+pythonpath = ["."]
