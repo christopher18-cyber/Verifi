@@ -1,73 +1,167 @@
 # 🛡️ Scam & Fraud Message Defense Assistant
 
-An open-source, hybrid AI assistant designed to protect everyday Nigerians from SMS, WhatsApp, and email scams—including fake bank alerts, phishing links, loan app harassment, and advance-fee fraud.
-
-Built for **OPEN//BUILD 2026** (OSCA Ile-Ife Hacktoberfest Challenge) under the theme *"AI belongs to everyone. Build for a world you understand."*
+An open-weight AI and rule-augmented security engine designed to protect everyday users from social engineering attacks, fake bank alerts, loan-app harassment, and phishing attempts—with native support for local context and West African Pidgin nuances.
 
 ---
 
-## 📌 Problem & Impact
+## 📌 Overview
 
-Digital financial fraud and social engineering scams affect millions of Nigerians daily. Fraudsters exploit panic and urgency through fake debit/credit alerts, lookalike bank web links, loan app contact threats, and bogus job or reward offers.
+Digital financial fraud across mobile messaging channels (SMS, WhatsApp, Email) heavily targets users through high-pressure tactics, fake debit/credit notifications, lookalike domains, and local slang. Standard filters often fail to flag these context-rich, localized threats.
 
-While large enterprise security platforms exist, everyday citizens need a lightweight, plain-language assistant that can instantly analyze suspicious messages, explain red flags clearly, and offer actionable, safe next steps.
-
----
-
-## 🏗️ Architecture & Technical Approach
-
-Small open-weight models can struggle with unconstrained reasoning or hallucinate facts when operating alone. To guarantee high dependability, **SafeGuard AI** implements a **hybrid multi-stage pipeline**:
-
-
-### Key Technical Features
-1. **Deterministic Safety Floor:** If high-risk flags (e.g., lookalike bank link + password request) are triggered, the engine enforces a hard-floor scam verdict regardless of LLM noise.
-2. **Graceful Fallback:** If API network calls time out or fail schema validation, the system gracefully falls back to rule-based scoring without throwing errors.
-3. **Pydantic Schema Validation:** Model outputs are strictly validated via Pydantic (`Analysis` schema), ensuring robust JSON parsing and quote verification.
+The **Scam & Fraud Message Defense Assistant** addresses this by combining deterministic, rule-based scanning with an open-weight Large Language Model (LLM) pipeline powered by **LangGraph**. This hybrid approach guarantees instant detection of hardcoded risk indicators (like lookalike domains or sensitive data requests) while leveraging AI contextual reasoning for nuanced threats.
 
 ---
 
-## 🤖 Open-Weight Model Selection
+## 🏗️ Architecture & Workflow
 
-* **Primary Analyst Model:** Hosted open-weight LLM (`openai/gpt-oss-20b` via Groq API) / Local `SmolLM2-360M-Instruct-GGUF` via `llama.cpp`.
-* **Selection Rationalization:** `SmolLM2-360M` and open-weight models excel at structured categorization and plain-English summaries when provided with structured evidence. Using a GGUF quantized model keeps memory requirements well within low-resource deployment limits (e.g., Render 512MB RAM tier).
+The system is built on a decoupled, production-ready architecture:
 
----
+```text
+[ User Input / Client UI ]
+           │
+           ▼
+ [ FastAPI (`/api/check`) ]
+           │
+           ▼
+  [ LangGraph Pipeline ]
+     ├── 1. Rules Node   ──────▶ (Deterministic checks: Regex, domain lookalikes, urgency flags)
+     └── 2. LLM Node     ──────▶ (Contextual analysis, language nuance, confidence scoring)
+           │
+           ▼
+ [ JSON Verdict Response ]
 
-## 📊 Evaluation & Dataset
+FastAPI Backend: Exposes a structured POST /api/check endpoint, handling asynchronous pipeline execution and serving the static frontend assets.
 
-We evaluated our hybrid architecture using an expanded evaluation benchmark (`dataset.csv`) comprising **43 real-world and synthetic message samples** across English and Nigerian Pidgin.
+LangGraph Pipeline: Orchestrates a stateful evaluation flow:
 
-| Evaluation Metric | Rules Only | Model Only | Hybrid Engine |
-| :--- | :--- | :--- | :--- |
-| **Verdict Accuracy** | ~84% | ~88% | **95%+** |
-| **Scams Missed (False Negatives)** | Low | Very Low | **0% (Hard Floor Safety)** |
-| **Pidgin Message Accuracy** | ~80% | ~85% | **92%** |
-| **Average Response Time** | < 0.1s | ~1.8s | **~1.9s** |
+Rules Node: Runs pattern matching for high-risk signals (BVN, OTP, PIN requests, phishing URLs, coercive language).
 
----
+LLM Node: Evaluates intent, tone, and language context (English & Pidgin) when deterministic rules require deeper contextual reasoning.
 
-## 🚀 Quickstart & Local Setup
+🚀 Key Features
+Hybrid Evaluation Engine: Combines speed and zero-false-negative reliability from rule checks with deep semantic comprehension from open-weight models.
 
-### Prerequisites
-* Python 3.11+
-* Docker (optional, for containerized run)
+Localized Context Awareness: Native detection for regional financial scams, loan-app contact shaming, and Pidgin social engineering.
 
-### 1. Local Python Setup
+Explainable Verdicts: Provides a risk score (0–100), highlighted threat signals, and a plain-language explanation with recommended safe next steps.
 
-```bash
-# Clone the repository
-git clone [https://github.com/your-username/scam-check.git](https://github.com/your-username/scam-check.git)
+Production-Ready Deployment: Configured for Docker, containerized hosting, and Hugging Face Spaces deployment.
+
+
+## 📂 Project Structure
+
+```text
+scam-check/
+├── app/
+│   ├── graph/
+│   │   ├── nodes/
+│   │   │   ├── llm_node.py    # LLM evaluation & contextual reasoning node
+│   │   │   └── rules_node.py  # Deterministic pattern & rule matching node
+│   │   ├── __init__.py
+│   │   ├── build.py           # LangGraph state machine assembly
+│   │   └── state.py           # TypedDict state schema definition
+│   ├── models/
+│   │   ├── adapter.py         # LLM provider adapter
+│   │   └── schemas.py         # Request/Response Pydantic models
+│   ├── prompts/               # Core system prompts (analyst, critic, explain)
+│   ├── rules/                 # Pattern checking utilities & domain lists
+│   └── main.py                # FastAPI application entrypoint
+├── static/                    # Static frontend assets (HTML, CSS, JS)
+├── eval/                      # Dataset evaluation scripts and test suites
+├── Dockerfile                 # Production container definition
+├── requirements.txt           # Dependencies manifest
+└── README.md                  # Project documentation
+
+
+
+🛠️ API Reference
+Check Message
+Evaluates a text message against the hybrid defense pipeline.
+
+Endpoint: POST /api/check
+
+Content-Type: application/json
+
+Request Body
+JSON
+{
+  "message": "GTBank Alert: Your account has been suspended. Verify your BVN immediately at [http://gtb-secure-verify.xyz/login](http://gtb-secure-verify.xyz/login)",
+  "language": "en"
+}
+
+Response Body
+JSON
+{
+  "verdict": "scam",
+  "category": "fake_bank_alert",
+  "reason": "The message uses coercive language regarding account suspension and directs the recipient to an unverified lookalike domain requesting sensitive financial credentials.",
+  "rules": {
+    "score": 80,
+    "flags": [
+      {
+        "id": "sensitive_info",
+        "label": "Requests Sensitive Information (BVN/OTP/PIN)",
+        "weight": 40
+      },
+      {
+        "id": "lookalike_domain",
+        "label": "Lookalike / Phishing Domain Detected",
+        "weight": 40
+      }
+    ]
+  }
+}
+
+
+💻 Local Development Setup
+Prerequisites
+Python 3.11+
+
+uv (recommended) or standard pip
+
+Installation & Execution
+1.  Clone the repository:
+
+git clone [https://github.com/your-repo/scam-check.git](https://github.com/your-repo/scam-check.git)
 cd scam-check
 
-# Install dependencies using uv or pip
-pip install -r requirements.txt
+2.  Set up the virtual environment:
 
-# Configure environment variables
-cp .env.example .env
-# Fill in MODEL_BASE_URL and MODEL_API_KEY in .env
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+uv pip install -r requirements.txt
 
-# Run test suite
-pytest
 
-# Launch the Gradio application
-python app/main.py
+3.  Configure Environment Variables:
+Create a .env file in the root directory:
+
+
+PORT=8000
+GROQ_API_KEY=your_api_key_here
+
+4.   Run the FastAPI server:
+
+uv run python -m app.main
+
+5.   Access the Application:
+
+Web UI: Open http://localhost:8000
+
+Interactive API Docs (Swagger): Open http://localhost:8000/docs
+
+🐳 Docker & Hugging Face Deployment
+Build and run locally using Docker:
+
+docker build -t scam-check .
+docker run -p 7860:7860 -e GROQ_API_KEY="your_api_key" scam-check
+
+For Hugging Face Spaces:
+
+Create a new Docker Space.
+
+Push this repository to the Space remote.
+
+Add your environment secrets (GROQ_API_KEY, etc.) in the Space settings under Variables and secrets.
+
+📜 License
+Distributed under the MIT License. See LICENSE for details.
