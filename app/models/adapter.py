@@ -51,7 +51,7 @@ async def analyse(message: str, evidence: dict) -> Analysis | None:
                 model=os.environ["MODEL_NAME"],
                 messages=messages,
                 temperature=0,
-                max_tokens=1000,
+                max_tokens=150,
             )
             text = resp.choices[0].message.content or ""
             result = Analysis(**_extract_json(text))

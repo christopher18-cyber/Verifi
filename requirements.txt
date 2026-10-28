@@ -1,6 +1,6 @@
 langgraph
 langchain
-lnagchain-huggingface
+langchain-huggingface
 pydantic
 python-dotenv
 pytest

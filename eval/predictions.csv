@@ -1,0 +1,106 @@
+id,setup,label,pred,category,pred_category,secs
+1,Rules only,scam,scam,fake_bank_alert,lookalike_domain,0.01
+2,Rules only,genuine,genuine,genuine,genuine,0.00
+3,Rules only,scam,genuine,prize_and_fee,genuine,0.03
+4,Rules only,scam,scam,fake_bank_alert,sensitive_data_request,0.00
+5,Rules only,scam,genuine,fake_relative,genuine,0.02
+6,Rules only,genuine,genuine,genuine,genuine,0.02
+7,Rules only,genuine,genuine,genuine,genuine,0.01
+8,Rules only,scam,suspicious,loan_app_threat,other_scam,0.01
+9,Rules only,scam,genuine,fake_job,genuine,0.02
+10,Rules only,scam,genuine,investment,genuine,0.01
+11,Rules only,scam,genuine,delivery,genuine,0.00
+12,Rules only,genuine,genuine,genuine,genuine,0.02
+13,Rules only,genuine,genuine,genuine,genuine,0.01
+14,Rules only,genuine,genuine,genuine,genuine,0.02
+15,Rules only,scam,genuine,fake_bank_alert,genuine,0.01
+16,Rules only,genuine,genuine,genuine,genuine,0.00
+17,Rules only,scam,genuine,prize_and_fee,genuine,0.01
+18,Rules only,genuine,genuine,genuine,genuine,0.02
+19,Rules only,genuine,genuine,genuine,genuine,0.03
+20,Rules only,scam,suspicious,loan_app_threat,other_scam,0.00
+21,Rules only,genuine,genuine,genuine,genuine,0.03
+22,Rules only,scam,genuine,other_scam,genuine,0.01
+23,Rules only,genuine,genuine,genuine,genuine,0.01
+24,Rules only,scam,genuine,fake_job,genuine,0.00
+25,Rules only,genuine,genuine,genuine,genuine,0.00
+26,Rules only,scam,genuine,fake_bank_alert,genuine,0.01
+27,Rules only,genuine,genuine,genuine,genuine,0.00
+28,Rules only,genuine,genuine,genuine,genuine,0.01
+29,Rules only,genuine,genuine,genuine,genuine,0.01
+30,Rules only,scam,genuine,fake_bank_alert,genuine,0.02
+31,Rules only,scam,genuine,other_scam,genuine,0.01
+32,Rules only,genuine,genuine,genuine,genuine,0.01
+33,Rules only,genuine,genuine,genuine,genuine,0.02
+34,Rules only,genuine,genuine,genuine,genuine,0.01
+35,Rules only,scam,genuine,investment,genuine,0.00
+1,Hybrid,scam,scam,fake_bank_alert,fake_bank_alert,3.11
+2,Hybrid,genuine,genuine,genuine,genuine,1.22
+3,Hybrid,scam,scam,prize_and_fee,prize_and_fee,0.77
+4,Hybrid,scam,scam,fake_bank_alert,fake_bank_alert,0.73
+5,Hybrid,scam,scam,fake_relative,fake_relative,1.17
+6,Hybrid,genuine,suspicious,genuine,other_scam,1.05
+7,Hybrid,genuine,suspicious,genuine,other_scam,3.77
+8,Hybrid,scam,scam,loan_app_threat,loan_app_threat,0.88
+9,Hybrid,scam,scam,fake_job,fake_job,1.33
+10,Hybrid,scam,scam,investment,investment,1.13
+11,Hybrid,scam,scam,delivery,delivery,0.98
+12,Hybrid,genuine,suspicious,genuine,fake_bank_alert,3.08
+13,Hybrid,genuine,genuine,genuine,genuine,1.34
+14,Hybrid,genuine,genuine,genuine,genuine,2.46
+15,Hybrid,scam,scam,fake_bank_alert,fake_bank_alert,2.11
+16,Hybrid,genuine,genuine,genuine,genuine,2.75
+17,Hybrid,scam,scam,prize_and_fee,prize_and_fee,2.34
+18,Hybrid,genuine,genuine,genuine,delivery,1.43
+19,Hybrid,genuine,suspicious,genuine,other_scam,12.99
+20,Hybrid,scam,scam,loan_app_threat,loan_app_threat,3.03
+21,Hybrid,genuine,genuine,genuine,genuine,3.89
+22,Hybrid,scam,scam,other_scam,other_scam,4.89
+23,Hybrid,genuine,suspicious,genuine,fake_job,3.84
+24,Hybrid,scam,scam,fake_job,fake_job,4.50
+25,Hybrid,genuine,genuine,genuine,genuine,0.89
+26,Hybrid,scam,scam,fake_bank_alert,other_scam,3.86
+27,Hybrid,genuine,genuine,genuine,genuine,0.72
+28,Hybrid,genuine,scam,genuine,other_scam,1.09
+29,Hybrid,genuine,scam,genuine,fake_relative,1.11
+30,Hybrid,scam,scam,fake_bank_alert,fake_bank_alert,2.88
+31,Hybrid,scam,scam,other_scam,other_scam,4.75
+32,Hybrid,genuine,scam,genuine,loan_app_threat,3.92
+33,Hybrid,genuine,scam,genuine,fake_relative,4.63
+34,Hybrid,genuine,genuine,genuine,genuine,1.17
+35,Hybrid,scam,scam,investment,investment,1.75
+1,Model only,scam,scam,fake_bank_alert,fake_bank_alert,0.94
+2,Model only,genuine,genuine,genuine,genuine,0.98
+3,Model only,scam,scam,prize_and_fee,prize_and_fee,1.09
+4,Model only,scam,scam,fake_bank_alert,fake_bank_alert,0.89
+5,Model only,scam,scam,fake_relative,fake_relative,1.10
+6,Model only,genuine,suspicious,genuine,other_scam,0.75
+7,Model only,genuine,suspicious,genuine,other_scam,1.12
+8,Model only,scam,scam,loan_app_threat,loan_app_threat,0.62
+9,Model only,scam,scam,fake_job,fake_job,0.96
+10,Model only,scam,scam,investment,investment,1.53
+11,Model only,scam,scam,delivery,delivery,1.11
+12,Model only,genuine,genuine,genuine,genuine,2.18
+13,Model only,genuine,scam,genuine,fake_bank_alert,1.45
+14,Model only,genuine,genuine,genuine,genuine,3.27
+15,Model only,scam,scam,fake_bank_alert,fake_bank_alert,0.83
+16,Model only,genuine,genuine,genuine,genuine,1.96
+17,Model only,scam,scam,prize_and_fee,prize_and_fee,6.96
+18,Model only,genuine,genuine,genuine,delivery,1.16
+19,Model only,genuine,genuine,genuine,genuine,5.36
+20,Model only,scam,scam,loan_app_threat,loan_app_threat,3.75
+21,Model only,genuine,genuine,genuine,genuine,4.40
+22,Model only,scam,scam,other_scam,other_scam,3.86
+23,Model only,genuine,suspicious,genuine,fake_job,4.36
+24,Model only,scam,scam,fake_job,fake_job,1.15
+25,Model only,genuine,suspicious,genuine,fake_bank_alert,3.23
+26,Model only,scam,scam,fake_bank_alert,fake_bank_alert,3.84
+27,Model only,genuine,genuine,genuine,genuine,3.54
+28,Model only,genuine,scam,genuine,other_scam,0.94
+29,Model only,genuine,scam,genuine,fake_relative,1.95
+30,Model only,scam,scam,fake_bank_alert,fake_bank_alert,0.62
+31,Model only,scam,scam,other_scam,other_scam,1.05
+32,Model only,genuine,suspicious,genuine,other_scam,1.64
+33,Model only,genuine,scam,genuine,fake_relative,0.68
+34,Model only,genuine,genuine,genuine,genuine,5.55
+35,Model only,scam,scam,investment,investment,0.88

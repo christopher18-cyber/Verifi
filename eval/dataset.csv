@@ -1,0 +1,85 @@
+id,message,label,category,language,split,notes
+1,GTBank Alert: Your account has been suspended. Verify your BVN and OTP within 24 hours: http://gtb-secure-verify.xyz/login,scam,fake_bank_alert,en,dev,synthetic draft; fake domain
+2,"Dear customer, your Access Bank account will be deactivated today. Update your details now: http://accessbank-update.top/kyc",scam,fake_bank_alert,en,dev,synthetic draft; fake domain
+3,"Oga, your account don block o. Send your OTP make we fit open am back.",scam,fake_bank_alert,pidgin,dev,synthetic draft
+4,UBA NOTICE: Unusual login detected on your account. Confirm your PIN and card details to avoid restriction. Reply with details.,scam,fake_bank_alert,en,test,synthetic draft; no link
+5,"Congratulations! You have won N2,500,000 in the MTN Mega Promo. Pay a N5,000 processing fee to claim your prize today: bit.ly/mtn-claim",scam,prize_and_fee,en,dev,synthetic draft
+6,"Abeg you don win 1 million naira for Glo promo! Send N3,000 registration fee make we process your prize.",scam,prize_and_fee,pidgin,dev,synthetic draft
+7,"You are the lucky winner of a brand new iPhone. Pay N7,500 delivery fee to receive your gift.",scam,prize_and_fee,en,test,synthetic draft; no link
+8,Your loan is overdue. Pay now or we will send your photo to everyone in your contact list.,scam,loan_app_threat,en,dev,synthetic draft
+9,"You don owe us money o. If you no pay today, we go call everybody for your phone and tell dem say you be thief.",scam,loan_app_threat,pidgin,test,synthetic draft
+10,"Hi, we are hiring remote data entry staff. Earn N150,000 weekly. Send N3,500 registration fee to start today.",scam,fake_job,en,dev,synthetic draft
+11,"Congratulations, you have been shortlisted for a Dubai hotel job paying $2,500 monthly. Visa and flight are free. Send your passport copy and a N20,000 slot fee to confirm your place.",scam,fake_job,en,dev,synthetic draft; no link
+12,"Abeg, we dey recruit people for oil company, salary na 400k monthly. Pay 15k for form make we put your name for list.",scam,fake_job,pidgin,test,synthetic draft
+13,"Mummy it's me, I lost my phone. This is my new number. Please send 20k airtime urgently, I will refund you tomorrow.",scam,fake_relative,en,dev,"synthetic draft; no link, no OTP request"
+14,"Hello uncle, I am in trouble at school and need N50,000 for a fine right now. Please don't tell Mum. Send to this account urgently.",scam,fake_relative,en,test,synthetic draft; no link
+15,"Aunty na me o, my phone spoil, na new number be this. Abeg send me 10k urgent, I go pay you back.",scam,fake_relative,pidgin,dev,synthetic draft
+16,"Invest N50,000 today and receive N200,000 in 7 days. Guaranteed returns, no risk. Limited slots, join our WhatsApp group now.",scam,investment,en,dev,synthetic draft
+17,"Our crypto trading bot doubles your money every week. Deposit N100,000 and withdraw N300,000 on Friday.",scam,investment,en,test,synthetic draft
+18,"Your parcel is held at the depot. Pay a N1,200 redelivery fee within 24 hours: tinyurl.com/parcel-ng-pay",scam,delivery,en,dev,synthetic draft
+19,We could not deliver your package. Confirm your address and pay N900 at http://delivery-ng-confirm.click,scam,delivery,en,test,synthetic draft; fake domain
+20,Your NIN is about to be deactivated. Send your NIN and BVN to this number to keep it active.,scam,other_scam,en,test,synthetic draft
+21,"Hi, this is Tunde from the bank. Please call me back on this number about your account.",suspicious,other_scam,en,dev,synthetic draft; ambiguous on purpose
+22,"Hello, I got your number from a friend. I have a business opportunity that can change your life. Can we talk?",suspicious,other_scam,en,dev,synthetic draft; ambiguous on purpose
+23,"Please send me your account number, I want to refund the money I owe you.",suspicious,other_scam,en,test,synthetic draft; ambiguous on purpose
+24,"Debit alert: N5,000.00 left your account on 24-Oct. Never share your OTP or PIN with anyone, including bank staff.",genuine,genuine,en,dev,synthetic draft; tricky: mentions OTP and PIN as a warning
+25,Your OTP is 482913. It expires in 10 minutes. Do not share this code with anyone.,genuine,genuine,en,dev,synthetic draft; tricky: real OTP delivery with urgency
+26,"Credit alert: N25,000.00 has been added to your account. Balance: N31,420.55.",genuine,genuine,en,dev,synthetic draft
+27,MTN: You have used 90% of your data bundle. Dial *131# to buy more or visit mtnonline.com.,genuine,genuine,en,dev,synthetic draft; official domain
+28,Your package from Jumia has been delivered. Thank you for shopping with us.,genuine,genuine,en,dev,synthetic draft
+29,Your bank statement for October is ready. Log in to the official app to view it.,genuine,genuine,en,dev,synthetic draft
+30,"Abeg I don send the money, check your account. Make you confirm say e don enter.",genuine,genuine,pidgin,dev,synthetic draft; Pidgin genuine
+31,"Dear parent, school fees for the second term are due by 15 November. Pay only through the school's official bank account listed on the school portal.",genuine,genuine,en,test,synthetic draft; tricky: fee and deadline
+32,"Hi, I'm running late, I'll be there in 20 minutes. Please send me the address again.",genuine,genuine,en,test,synthetic draft
+33,"Airtel: Your recharge of N1,000 was successful. Your new balance is N1,250. Thank you.",genuine,genuine,en,test,synthetic draft
+34,"GTBank: Suspicious transaction blocked on your card. If this was not you, call the number on the back of your card. We will never ask for your PIN or OTP.",genuine,genuine,en,test,synthetic draft; tricky: alarming wording but genuine
+35,"Mama, I don reach school. Make you no worry, I go call you tonight.",genuine,genuine,pidgin,test,synthetic draft; Pidgin genuine
+36,FirstBank: Your BVN has expired. Re-validate at http://firstbank-bvn-update.site to avoid account restriction.,scam,fake_bank_alert,en,dev,synthetic draft; fake domain
+37,"Dear customer, a transfer of N350,000 was initiated from your account. If this was not you, reply with your PIN to cancel.",scam,fake_bank_alert,en,test,"synthetic draft; PIN request, no link"
+38,Your bank don detect strange login. Send your card number and CVV make we secure your money.,scam,fake_bank_alert,pidgin,dev,synthetic draft
+39,Zenith Bank: Your account is on hold. Click zenithbank-secure.live/login and enter your details to restore access.,scam,fake_bank_alert,en,dev,synthetic draft; fake domain
+40,Kuda: We noticed a problem with your account. Please confirm your password at kuda-support.icu to continue using the app.,scam,fake_bank_alert,en,test,synthetic draft; fake domain
+41,"Dear Subscriber, your number has won N500,000 in the Airtel Anniversary draw. To claim, send N2,000 airtime to our agent and reply WIN.",scam,prize_and_fee,en,dev,synthetic draft
+42,Na you be the lucky winner of our NNPC promo! Send your account number and BVN make we credit 300k.,scam,prize_and_fee,pidgin,test,synthetic draft
+43,"You have been selected for a N100,000 government empowerment grant. Pay N4,500 processing fee to receive it.",scam,prize_and_fee,en,dev,synthetic draft
+44,Final notice: repay your loan today or we will message your employer and your family about your debt.,scam,loan_app_threat,en,test,synthetic draft
+45,Pay the money today or we go put your picture for WhatsApp tell everybody say you be fraudster.,scam,loan_app_threat,pidgin,dev,synthetic draft
+46,"Urgent hiring: Customer care agents needed. No experience required, N200,000 monthly. Pay N5,000 for training materials to secure your slot.",scam,fake_job,en,test,synthetic draft
+47,"Your CV has been selected for an NNPC internship. Click http://nnpc-careers-ng.top/apply and pay the N2,500 application fee.",scam,fake_job,en,dev,synthetic draft; fake domain
+48,"Abeg make you pay 5k for registration, na so we go fit give you work for Dubai.",scam,fake_job,pidgin,dev,synthetic draft
+49,"Hi dear, it's your cousin. I'm stranded and my card isn't working. Please transfer N30,000 now, I'll pay back tonight.",scam,fake_relative,en,test,synthetic draft; no link
+50,"Bros na me, I dey police station. Abeg send 40k make dem release me, no tell anybody.",scam,fake_relative,pidgin,test,synthetic draft
+51,"Hello, this is your boss. I'm in a meeting. Buy 5 gift cards of N10,000 each and send me the codes. Keep it private.",scam,other_scam,en,dev,synthetic draft; boss impersonation
+52,"Join our forex signals group. Members earn up to 40% weekly. Pay N20,000 entry fee today.",scam,investment,en,dev,synthetic draft
+53,"Abeg invest 20k now, after 2 weeks you go collect 100k. E no get risk.",scam,investment,pidgin,test,synthetic draft
+54,"Binary options trading: deposit N50,000 and our expert will manage it for you. Daily profits guaranteed.",scam,investment,en,test,synthetic draft
+55,FedEx: Your package could not be delivered due to an incomplete address. Update it here: rb.gy/fedex-ng and pay N800 handling fee.,scam,delivery,en,dev,synthetic draft; shortener
+56,"Customs has seized your parcel. Pay N15,000 clearance fee to release it today.",scam,delivery,en,test,synthetic draft; no link
+57,Your SIM will be blocked in 24 hours unless you link your NIN. Click http://nin-link-ng.xyz to complete.,scam,other_scam,en,dev,synthetic draft; fake domain
+58,"Dear customer, your electricity meter will be disconnected today. Pay your outstanding bill of N18,500 at http://phcn-pay.top to avoid disconnection.",scam,other_scam,en,test,synthetic draft; fake domain
+59,Your NIN don expire. Send am to this number make dem renew am for you.,scam,other_scam,pidgin,dev,synthetic draft
+60,"I accidentally sent N45,000 to your account. Please return it to this number, I am in a serious emergency.",scam,other_scam,en,test,"synthetic draft; wrong-transfer scam, no link"
+61,"I am interested in your item. I will pay extra if you send N5,000 first so my driver can pick it up today.",scam,other_scam,en,dev,synthetic draft; marketplace scam
+62,"Congratulations, your WhatsApp number was selected for a verification reward. Send the 6-digit code you just received to claim.",scam,other_scam,en,test,"synthetic draft; code theft, hard for rules"
+63,Your account may have a problem. Please contact our office as soon as possible.,suspicious,other_scam,en,dev,synthetic draft; ambiguous on purpose
+64,"Hello, I saw your ad. Is the item still available? I'm outside Nigeria and will send my agent to pay.",suspicious,other_scam,en,test,synthetic draft; ambiguous on purpose
+65,"Please I need to borrow N10,000, I will pay you back Friday.",suspicious,other_scam,en,dev,synthetic draft; could be a real friend
+66,Your package could not be delivered. Please call us back.,suspicious,delivery,en,test,synthetic draft; ambiguous on purpose
+67,Congratulations on your new job! Please complete your onboarding here: forms.gle/abc123,suspicious,other_scam,en,test,synthetic draft; ambiguous on purpose
+68,"Zenith Bank: Transfer of N10,000.00 to ADE*** successful. Bal: N88,200.40.",genuine,genuine,en,dev,synthetic draft
+69,"Your OTP for login is 739204. Valid for 5 minutes. If you did not request this, ignore this message.",genuine,genuine,en,dev,synthetic draft; tricky: real OTP message
+70,MTN: Your N500 airtime purchase was successful. Thank you for choosing MTN.,genuine,genuine,en,test,synthetic draft
+71,Reminder: your rent is due on 1 November. Please pay to the account we agreed on.,genuine,genuine,en,test,synthetic draft; tricky: payment request from a known person
+72,"Hi, can you send me the lecture notes for MTH 201? I missed class.",genuine,genuine,en,dev,synthetic draft; tricky: contains the word send
+73,The second semester registration portal is now open. Visit the official school portal to register.,genuine,genuine,en,test,synthetic draft
+74,"Your electricity token purchase of N5,000 was successful. Token: 1234 5678 9012 3456 7890.",genuine,genuine,en,dev,synthetic draft; tricky: contains the word token
+75,Please don't share your PIN with anyone. Bank staff will never ask for it.,genuine,genuine,en,dev,synthetic draft; tricky: security tip
+76,"Abeg I dey come, wait for me for gate.",genuine,genuine,pidgin,dev,synthetic draft
+77,"Oga, your food don ready, make you come collect am.",genuine,genuine,pidgin,test,synthetic draft
+78,"Thank you o, I don receive the 5k. God bless you.",genuine,genuine,pidgin,test,"synthetic draft; Pidgin genuine, mentions money"
+79,Your Uber is arriving in 3 minutes. Your driver is Ade in a white Toyota Corolla.,genuine,genuine,en,dev,synthetic draft
+80,"Opay: Your transfer of N2,000 to your wallet was successful.",genuine,genuine,en,test,synthetic draft
+81,"Dear student, your hostel allocation is ready. Check the school portal.",genuine,genuine,en,dev,synthetic draft
+82,Your appointment is confirmed for Thursday 10am at the clinic. Reply YES to confirm or call us to reschedule.,genuine,genuine,en,test,synthetic draft; tricky: asks for a reply
+83,"Flutterwave: Your payment of N12,000 to Shoprite was successful.",genuine,genuine,en,test,synthetic draft
+84,"Your Jumia order is out for delivery today. No payment needed, you already paid online.",genuine,genuine,en,test,synthetic draft; tricky: delivery and payment words
