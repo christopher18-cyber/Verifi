@@ -10,7 +10,7 @@ async def run_llm_evaluation(state: ScamState) -> ScamState:
 
     api_key = os.getenv("MODEL_API_KEY")
     base_url = os.getenv("MODEL_BASE_URL", "https://api.groq.com/openai/v1")
-    model_name = os.getenv("MODEL_NAME", "llama-3.3-70b-versatile")
+    model_name = os.getenv("MODEL_NAME", "openai/gpt-oss-20b")
 
     # If API key is missing or disabled, fall back to rule verdict
     if not api_key or os.getenv("MODEL_ENABLED", "true").lower() == "false":
