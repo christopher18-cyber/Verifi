@@ -80,25 +80,32 @@ document.addEventListener('DOMContentLoaded', () => {
             detailsBox.classList.remove('hidden');
             reasonText.textContent = data.reason || 'Hybrid engine completed evaluation.';
 
-            // Score & Flags
-            const score = data.rules && data.rules.score !== undefined ? data.rules.score : (data.score || 0);
-            scoreBadge.textContent = `Risk Score: ${score}/100`;
-            scoreBadge.className = score > 50
-                ? 'text-xs font-mono font-bold px-2.5 py-1 rounded bg-red-100 text-red-700 border border-red-200'
-                : 'text-xs font-mono font-bold px-2.5 py-1 rounded bg-emerald-100 text-emerald-700 border border-emerald-200';
-
+            // Score & Flags Evaluation Logic
+            const rawScore = data.rules && data.rules.score !== undefined ? data.rules.score : (data.score || 0);
             const flags = (data.rules && data.rules.flags) || data.rules_triggered || [];
-            if (flags.length > 0) {
-                flagsContainer.innerHTML = flags.map(flag => {
-                    const label = flag.label || flag;
-                    const weight = flag.weight ? ` (+${flag.weight}pts)` : '';
-                    return `<div class="text-xs bg-slate-100 border border-slate-200 text-slate-700 p-2 rounded-lg flex justify-between items-center">
-                        <span>🛡️ ${escapeHtml(label)}</span>
-                        <span class="font-mono text-slate-500">${weight}</span>
-                    </div>`;
-                }).join('');
+
+            if (isScam) {
+                // Display Risk Score & Triggered Red Flag Badges for Scams
+                scoreBadge.textContent = `Risk Score: ${rawScore}/100`;
+                scoreBadge.className = 'text-xs font-mono font-bold px-2.5 py-1 rounded bg-red-100 text-red-700 border border-red-200';
+
+                if (flags.length > 0) {
+                    flagsContainer.innerHTML = flags.map(flag => {
+                        const label = flag.label || flag;
+                        const weight = flag.weight ? ` (+${flag.weight}pts)` : '';
+                        return `<div class="text-xs bg-slate-100 border border-slate-200 text-slate-700 p-2 rounded-lg flex justify-between items-center">
+                            <span>🛡️ ${escapeHtml(label)}</span>
+                            <span class="font-mono text-slate-500">${weight}</span>
+                        </div>`;
+                    }).join('');
+                } else {
+                    flagsContainer.innerHTML = `<p class="text-xs text-slate-400 italic">No specific rule flags triggered.</p>`;
+                }
             } else {
-                flagsContainer.innerHTML = `<p class="text-xs text-slate-400 italic">No red flag rules triggered.</p>`;
+                // If message is SAFE, override false-positive rule flags
+                scoreBadge.textContent = `Risk Score: 0/100`;
+                scoreBadge.className = 'text-xs font-mono font-bold px-2.5 py-1 rounded bg-emerald-100 text-emerald-700 border border-emerald-200';
+                flagsContainer.innerHTML = `<p class="text-xs text-emerald-700 font-medium">✅ No active threat signals detected.</p>`;
             }
 
         } catch (err) {

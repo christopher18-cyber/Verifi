@@ -1,34 +1,29 @@
 from app.graph.state import ScamState
 
-
-# Assuming you have a rule checking utility or function.
-# Let's write a robust wrapper that evaluates the message against your rules.
-
 def run_rules_check(state: ScamState) -> ScamState:
     message = state["message"]
-
-    # Example rule evaluation logic (customize based on your checks.py)
     flags = []
     score = 0
-
-    # Basic keyword / regex checks
     msg_lower = message.lower()
 
-    if any(word in msg_lower for word in ["bvn", "otp", "suspended", "blocked", "pin"]):
-        flags.append({"id": "sensitive_info", "label": "Requests Sensitive Information (BVN/OTP/PIN)", "weight": 40})
+    # Check for negative/advisory contexts first
+    is_advisory = any(phrase in msg_lower for phrase in ["never share", "do not share", "don't share", "do not disclose"])
+
+    # Only flag sensitive info requests if it's NOT an advisory message
+    if not is_advisory and any(word in msg_lower for word in ["bvn", "otp", "suspended", "blocked", "pin"]):
+        flags.append({"id": "sensitive_info", "label": "Requests Sensitive Information (OTP/PIN/BVN)", "weight": 40})
         score += 40
 
     if any(word in msg_lower for word in ["http://", "https://", "bit.ly", "t.co"]):
-        flags.append({"id": "phishing_link", "label": "Contains URL / Link", "weight": 30})
+        flags.append({"id": "phishing_link", "label": "Contains External Link", "weight": 30})
         score += 30
 
-    if any(word in msg_lower for word in ["urgent", "immediately", "24 hours", "suspended"]):
+    if any(word in msg_lower for word in ["urgent", "immediately", "24 hours"]):
         flags.append({"id": "urgency", "label": "High Urgency / Coercion", "weight": 20})
         score += 20
 
     score = min(score, 100)
 
-    # Determine initial rule verdict
     verdict = "genuine"
     if score >= 50:
         verdict = "scam"
