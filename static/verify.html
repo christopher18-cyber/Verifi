@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Message - Verifi AI Defense</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col justify-between font-sans">
+
+    <!-- Header -->
+    <header class="border-b border-slate-200 bg-white sticky top-0 z-50 shadow-xs">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="/" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-sm font-semibold transition" title="Back to Home">
+                    ←
+                </a>
+                <a href="/" class="flex items-center gap-2 group">
+                    <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-base font-bold shadow-xs">🛡️</span>
+                    <span class="text-xl font-extrabold tracking-tight text-slate-900">Verifi</span>
+                </a>
+            </div>
+            <div class="flex items-center gap-3">
+                <span class="text-xs bg-indigo-50 text-indigo-700 border border-indigo-200 px-3 py-1 rounded-full font-semibold">
+                    OPEN//BUILD 2026
+                </span>
+                <a href="/" class="text-xs text-slate-500 hover:text-slate-800 font-medium transition hidden sm:inline-block">
+                    Home
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 py-8 w-full flex-grow">
+        <div class="mb-6">
+            <h1 class="text-2xl font-black text-slate-900 tracking-tight">Message & Screenshot Scanner</h1>
+            <p class="text-xs text-slate-500 mt-1">Paste a suspicious SMS, WhatsApp message or email, or drop a chat screenshot. Rules detect red flags instantly, then the AI explains the verdict in plain words.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+
+            <!-- Left Column: Input Form & Sample Buttons -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h2 class="text-sm font-bold text-slate-700 uppercase tracking-wider">Input Source</h2>
+                    <div class="flex bg-slate-100 p-0.5 rounded-xl text-xs font-semibold" role="tablist">
+                        <button type="button" id="tab-text-btn" class="px-3 py-1.5 rounded-lg bg-white shadow-sm text-slate-900 transition flex items-center gap-1.5" role="tab" aria-selected="true">
+                            <span>✍️ Text</span>
+                        </button>
+                        <button type="button" id="tab-ocr-btn" class="px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition flex items-center gap-1.5" role="tab" aria-selected="false">
+                            <span>📸 Screenshot</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Screenshot OCR Dropzone & Preview Section -->
+                <div id="ocr-container" class="hidden space-y-3">
+                    <div id="ocr-dropzone" class="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-2xl p-6 text-center cursor-pointer transition-all bg-slate-50 hover:bg-indigo-50/40 group relative">
+                        <input type="file" id="ocr-file-input" accept="image/png,image/jpeg,image/webp,image/jpg" class="hidden">
+                        <div class="flex flex-col items-center justify-center space-y-2">
+                            <div class="w-12 h-12 rounded-full bg-indigo-100 group-hover:bg-indigo-200 text-indigo-600 flex items-center justify-center text-2xl transition">
+                                📸
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-800">
+                                    Drop SMS / WhatsApp screenshot here
+                                </p>
+                                <p class="text-xs text-slate-500 mt-0.5">
+                                    or <span class="text-indigo-600 underline font-medium">browse files</span> • paste with <kbd class="px-1.5 py-0.5 bg-slate-200 text-slate-700 rounded text-[10px] font-mono">Ctrl+V</kbd>
+                                </p>
+                            </div>
+                            <p class="text-[11px] text-slate-400">PNG, JPG, or WebP</p>
+                        </div>
+                    </div>
+
+                    <!-- Image Preview Card -->
+                    <div id="ocr-preview-card" class="hidden bg-slate-50 border border-slate-200 rounded-xl p-3 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <img id="ocr-preview-img" src="" alt="Screenshot Preview" class="w-12 h-12 object-cover rounded-lg border border-slate-200 shadow-xs flex-shrink-0">
+                            <div class="min-w-0">
+                                <p id="ocr-file-name" class="text-xs font-semibold text-slate-800 truncate">screenshot.png</p>
+                                <p id="ocr-file-size" class="text-[11px] text-slate-500">120 KB</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1.5 flex-shrink-0">
+                            <button type="button" id="ocr-rescan-btn" class="text-xs text-indigo-600 hover:text-indigo-800 px-2 py-1 rounded hover:bg-indigo-50 font-medium transition" title="Rescan Image">🔄 Rescan</button>
+                            <button type="button" id="ocr-clear-btn" class="text-xs text-slate-400 hover:text-red-600 p-1 rounded-md hover:bg-red-50 transition" title="Remove Screenshot">✕</button>
+                        </div>
+                    </div>
+
+                    <!-- OCR Progress Indicator -->
+                    <div id="ocr-progress-box" class="hidden bg-indigo-50/70 border border-indigo-100 rounded-xl p-3 space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span id="ocr-status-text" class="font-medium text-indigo-900 flex items-center gap-1.5">
+                                <span class="inline-block animate-spin">⏳</span> Initializing OCR scanner...
+                            </span>
+                            <span id="ocr-percent-text" class="font-bold font-mono text-indigo-700">0%</span>
+                        </div>
+                        <div class="w-full bg-indigo-200/60 rounded-full h-2 overflow-hidden">
+                            <div id="ocr-progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-200" style="width: 0%"></div>
+                        </div>
+                    </div>
+
+                    <!-- OCR Success Alert -->
+                    <div id="ocr-success-alert" class="hidden bg-emerald-50 border border-emerald-200 rounded-xl p-2.5 flex items-center justify-between text-xs text-emerald-800">
+                        <span class="flex items-center gap-1.5 font-medium">
+                            <span>✅</span> <span id="ocr-char-count">Text extracted from image</span>
+                        </span>
+                        <span class="text-[11px] text-emerald-600 font-medium">Extracted into form below</span>
+                    </div>
+                </div>
+
+                <form id="scan-form" class="space-y-4">
+                    <div id="text-input-section" class="space-y-1.5">
+                        <div class="flex items-center justify-between text-xs text-slate-500">
+                            <label for="message-input" class="font-medium text-slate-700">Message content</label>
+                            <span id="input-hint" class="text-[11px] text-slate-400">Ctrl+V paste works anywhere</span>
+                        </div>
+                        <textarea
+                            id="message-input"
+                            rows="5"
+                            required
+                            placeholder="Paste suspicious message here, or drop a screenshot above..."
+                            class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-800 focus:outline-none focus:border-indigo-600 transition resize-none"></textarea>
+                    </div>
+
+                    <!-- Language & Submit Row -->
+                    <div class="space-y-3 pt-1">
+                        <div>
+                            <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Verdict Language:</span>
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex flex-wrap bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-semibold gap-1" id="language-switcher">
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg bg-white shadow-sm text-slate-900 transition" data-lang="en">English</button>
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition" data-lang="pidgin">🇳🇬 Pidgin</button>
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition" data-lang="yoruba">Yorùbá</button>
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition" data-lang="hausa">Hausa</button>
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition" data-lang="igbo">Igbo</button>
+                                </div>
+                                <button
+                                    type="submit"
+                                    id="submit-btn"
+                                    class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 px-6 rounded-xl transition duration-200 text-sm shadow-md cursor-pointer">
+                                    Check message
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Sample Buttons -->
+                <div class="space-y-2 pt-2 border-t border-slate-100">
+                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Try localized samples:</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="en" data-msg="GTBank Alert: Your account has been suspended. Verify your BVN and OTP within 24 hours: http://gtb-secure-verify.xyz/login">🇬🇧 Bank Alert (EN)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="pidgin" data-msg="Abeg sharp sharp: Your OPay account don get issue. Click here quickly to confirm your BVN make your money no hang: http://opay-verify-ng.top">🇳🇬 OPay Phish (Pidgin)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="yoruba" data-msg="Ifitonile Pataki: A ti ti akanti banki yin pa nitori aito BVN. Tesiwaju lati te OTP ati BVN re si https://gtb-update-portal.xyz/login laarin wakati 24 lati tun se.">🇳🇬 BVN Fake (Yorùbá)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="hausa" data-msg="Sanarwa daga Banki: An dakatar da asusunka saboda rashin inganta BVN. Da fatan za a tura lambar sirri (OTP) a http://gtb-update-portal.xyz/login a cikin sa'o'i 24.">🇳🇬 Bank Threat (Hausa)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="igbo" data-msg="Ozi di mkpa: E mechiri akauntu gi n'ihi nsogbu BVN. Biko tinye BVN na koodu OTP gi ozugbo na http://gtb-update-portal.xyz/login tupu awa 24 agwụcha.">🇳🇬 Akauntu Phish (Igbo)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="en" data-msg="CONGRATULATIONS! Your loan of N200,000 has been approved instantly without collateral. Click here to claim now: https://quickcash-ng.live">Loan-app threat</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="en" data-msg="Debit alert: N5,000.00 left your account on 24-Oct. Never share your OTP or PIN with anyone, including bank staff.">Genuine alert</button>
+                    </div>
+                </div>
+
+                <p class="text-[11px] text-slate-400">Your message is evaluated in memory and never stored in any database. Never paste real personal PINs or passwords.</p>
+            </div>
+
+            <!-- Right Column: Pipeline Breakdown & Verdict -->
+            <div class="space-y-6">
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <h2 class="text-sm font-bold text-slate-700 uppercase tracking-wider">What the checker does</h2>
+                        <span id="verdict-pill" class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-500">Waiting for scan</span>
+                    </div>
+
+                    <!-- Pipeline Steps List -->
+                    <div id="pipeline-steps" class="space-y-4 text-sm">
+                        <div class="flex items-start space-x-3 text-slate-400">
+                            <span class="text-lg">⚪</span>
+                            <div>
+                                <p class="font-semibold text-slate-700">Clean the message</p>
+                                <p class="text-xs text-slate-500">Trimmed spaces and kept a working copy</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 text-slate-400">
+                            <span class="text-lg">⚪</span>
+                            <div>
+                                <p class="font-semibold text-slate-700">Find signals & rules</p>
+                                <p class="text-xs text-slate-500">Deterministic checks for urgency, links, and sensitive info</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 text-slate-400">
+                            <span class="text-lg">⚪</span>
+                            <div>
+                                <p class="font-semibold text-slate-700">Model second opinion (Groq AI)</p>
+                                <p class="text-xs text-slate-500">Contextual analysis for advanced social engineering</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3 text-slate-400">
+                            <span class="text-lg">⚪</span>
+                            <div>
+                                <p class="font-semibold text-slate-700">Merge into a verdict</p>
+                                <p class="text-xs text-slate-500">Final threat evaluation and risk score</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Flags & Rules Result Area -->
+                    <div id="details-box" class="hidden border-t border-slate-100 pt-4 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-bold text-slate-600 uppercase">Triggered Rules / Flags</span>
+                            <span id="score-badge" class="text-xs font-mono font-bold px-2 py-0.5 rounded"></span>
+                        </div>
+                        <div id="flags-container" class="space-y-2"></div>
+                        <p id="reason-text" class="text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-200 leading-relaxed"></p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-200 bg-white py-4 text-center text-xs text-slate-400">
+        <p>OPEN//BUILD 2026 Hackathon • Hybrid Rules & Groq LLM Inference • <a href="/" class="underline hover:text-slate-600">Back to Landing Page</a></p>
+    </footer>
+
+    <!-- Tesseract.js for Client-Side Screenshot OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>

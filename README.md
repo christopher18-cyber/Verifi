@@ -1,14 +1,14 @@
-# 🛡️ Scam & Fraud Message Defense Assistant
-
+# 🛡️ Verifi: Fraud & Scam Message Defense Assistant
+ 
 An open-weight AI and rule-augmented security engine designed to protect everyday users from social engineering attacks, fake bank alerts, loan-app harassment, and phishing attempts—with native support for local context and West African Pidgin nuances.
-
+ 
 ---
-
+ 
 ## 📌 Overview
-
+ 
 Digital financial fraud across mobile messaging channels (SMS, WhatsApp, Email) heavily targets users through high-pressure tactics, fake debit/credit notifications, lookalike domains, and local slang. Standard filters often fail to flag these context-rich, localized threats.
-
-The **Scam & Fraud Message Defense Assistant** addresses this by combining deterministic, rule-based scanning with an open-weight Large Language Model (LLM) pipeline powered by **LangGraph**. This hybrid approach guarantees instant detection of hardcoded risk indicators (like lookalike domains or sensitive data requests) while leveraging AI contextual reasoning for nuanced threats.
+ 
+The **Verifi** defense assistant addresses this by combining deterministic, rule-based scanning with an open-weight Large Language Model (LLM) pipeline powered by **LangGraph**. This hybrid approach guarantees instant detection of hardcoded risk indicators (like lookalike domains or sensitive data requests) while leveraging AI contextual reasoning for nuanced threats.
 
 ---
 

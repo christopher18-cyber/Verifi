@@ -10,7 +10,7 @@ from app.graph.build import graph
 load_dotenv()
 
 app = FastAPI(
-    title="Scam & Fraud Message Defense Assistant API",
+    title="Verifi - Fraud & Scam Message Defense Assistant API",
     description="Backend API powered by hybrid deterministic rules and LLM evaluation."
 )
 
@@ -41,13 +41,22 @@ os.makedirs("static", exist_ok=True)
 # Mount static assets (CSS, JS, images)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Serve main frontend entrypoint
+# Serve main landing page
 @app.get("/")
 async def read_index():
     index_path = os.path.join("static", "index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path)
     return {"message": "API is running. Place your index.html inside the 'static' folder."}
+
+# Serve dedicated verification / scanner app
+@app.get("/verify")
+@app.get("/scanner")
+async def read_verify():
+    verify_path = os.path.join("static", "verify.html")
+    if os.path.exists(verify_path):
+        return FileResponse(verify_path)
+    return FileResponse(os.path.join("static", "index.html"))
 
 def find_available_port(host: str, starting_port: int, max_attempts: int = 50) -> int:
     """Check if the given port is available; if not, return the next open port."""
