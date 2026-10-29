@@ -41,6 +41,8 @@ LLM Node: Evaluates intent, tone, and language context (English & Pidgin) when d
 🚀 Key Features
 Hybrid Evaluation Engine: Combines speed and zero-false-negative reliability from rule checks with deep semantic comprehension from open-weight models.
 
+📸 Screenshot & Image OCR Scanning: Client-side optical character recognition via Tesseract.js. Users can drag-and-drop, browse, or directly paste (Ctrl+V) SMS or WhatsApp chat screenshots to extract and inspect text automatically without typing.
+
 Localized Context Awareness: Native detection for regional financial scams, loan-app contact shaming, and Pidgin social engineering.
 
 Explainable Verdicts: Provides a risk score (0–100), highlighted threat signals, and a plain-language explanation with recommended safe next steps.

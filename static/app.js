@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Core Elements
     const form = document.getElementById('scan-form');
     const messageInput = document.getElementById('message-input');
     const submitBtn = document.getElementById('submit-btn');
@@ -9,9 +10,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const flagsContainer = document.getElementById('flags-container');
     const reasonText = document.getElementById('reason-text');
 
-    let currentLang = 'en';
+    // Tab & OCR Elements
+    const tabTextBtn = document.getElementById('tab-text-btn');
+    const tabOcrBtn = document.getElementById('tab-ocr-btn');
+    const ocrContainer = document.getElementById('ocr-container');
+    const ocrDropzone = document.getElementById('ocr-dropzone');
+    const ocrFileInput = document.getElementById('ocr-file-input');
+    const ocrPreviewCard = document.getElementById('ocr-preview-card');
+    const ocrPreviewImg = document.getElementById('ocr-preview-img');
+    const ocrFileName = document.getElementById('ocr-file-name');
+    const ocrFileSize = document.getElementById('ocr-file-size');
+    const ocrProgressBox = document.getElementById('ocr-progress-box');
+    const ocrProgressBar = document.getElementById('ocr-progress-bar');
+    const ocrPercentText = document.getElementById('ocr-percent-text');
+    const ocrStatusText = document.getElementById('ocr-status-text');
+    const ocrSuccessAlert = document.getElementById('ocr-success-alert');
+    const ocrCharCount = document.getElementById('ocr-char-count');
+    const ocrRescanBtn = document.getElementById('ocr-rescan-btn');
+    const ocrClearBtn = document.getElementById('ocr-clear-btn');
+    const sampleScreenshotBtn = document.getElementById('sample-screenshot-btn');
 
-    // Language switcher buttons
+    let currentLang = 'en';
+    let currentImageFile = null;
+    let currentPreviewUrl = null;
+    let isOcrProcessing = false;
+
+    // --- TAB SWITCHING ---
+    function activateTextTab() {
+        tabTextBtn.classList.add('bg-white', 'shadow-sm', 'text-slate-900');
+        tabTextBtn.classList.remove('text-slate-500');
+        tabOcrBtn.classList.remove('bg-white', 'shadow-sm', 'text-slate-900');
+        tabOcrBtn.classList.add('text-slate-500');
+        ocrContainer.classList.add('hidden');
+    }
+
+    function activateOcrTab() {
+        tabOcrBtn.classList.add('bg-white', 'shadow-sm', 'text-slate-900');
+        tabOcrBtn.classList.remove('text-slate-500');
+        tabTextBtn.classList.remove('bg-white', 'shadow-sm', 'text-slate-900');
+        tabTextBtn.classList.add('text-slate-500');
+        ocrContainer.classList.remove('hidden');
+    }
+
+    tabTextBtn.addEventListener('click', activateTextTab);
+    tabOcrBtn.addEventListener('click', activateOcrTab);
+
+    // --- LANGUAGE SWITCHER ---
     document.querySelectorAll('.lang-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             document.querySelectorAll('.lang-btn').forEach(b => {
@@ -24,13 +68,301 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Sample buttons functionality
+    // --- TEXT SAMPLE BUTTONS ---
     document.querySelectorAll('.sample-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             messageInput.value = e.target.getAttribute('data-msg');
+            activateTextTab();
+            messageInput.focus();
         });
     });
 
+    // --- OCR FILE SELECTION & DRAG AND DROP ---
+    ocrDropzone.addEventListener('click', () => {
+        if (!isOcrProcessing) {
+            ocrFileInput.click();
+        }
+    });
+
+    ocrFileInput.addEventListener('change', (e) => {
+        const file = e.target.files && e.target.files[0];
+        if (file) {
+            processImageFile(file);
+        }
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        ocrDropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (!isOcrProcessing) {
+                ocrDropzone.classList.add('drag-active');
+            }
+        });
+    });
+
+    ['dragleave', 'dragend', 'drop'].forEach(eventName => {
+        ocrDropzone.addEventListener(eventName, (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            ocrDropzone.classList.remove('drag-active');
+        });
+    });
+
+    ocrDropzone.addEventListener('drop', (e) => {
+        if (isOcrProcessing) return;
+        const dt = e.dataTransfer;
+        if (dt && dt.files && dt.files.length > 0) {
+            const file = dt.files[0];
+            if (file.type.startsWith('image/')) {
+                processImageFile(file);
+            } else {
+                alert('Please upload an image file (PNG, JPG, WebP).');
+            }
+        }
+    });
+
+    // Global Clipboard Paste (Ctrl+V) anywhere on the page
+    window.addEventListener('paste', (e) => {
+        const items = e.clipboardData && e.clipboardData.items;
+        if (!items) return;
+
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type.startsWith('image/')) {
+                const file = items[i].getAsFile();
+                if (file) {
+                    e.preventDefault();
+                    activateOcrTab();
+                    processImageFile(file, `pasted_screenshot_${Date.now()}.png`);
+                    break;
+                }
+            }
+        }
+    });
+
+    // --- IMAGE PREVIEW & CLEAR ---
+    function formatBytes(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+    }
+
+    function clearOcrImage() {
+        if (currentPreviewUrl) {
+            URL.revokeObjectURL(currentPreviewUrl);
+            currentPreviewUrl = null;
+        }
+        currentImageFile = null;
+        ocrFileInput.value = '';
+        ocrPreviewCard.classList.add('hidden');
+        ocrProgressBox.classList.add('hidden');
+        ocrSuccessAlert.classList.add('hidden');
+        ocrDropzone.classList.remove('hidden');
+        isOcrProcessing = false;
+    }
+
+    ocrClearBtn.addEventListener('click', clearOcrImage);
+
+    ocrRescanBtn.addEventListener('click', () => {
+        if (currentImageFile && !isOcrProcessing) {
+            runOcrOnImage(currentImageFile);
+        }
+    });
+
+    // --- OCR EXTRACTION CORE VIA TESSERACT.JS ---
+    async function processImageFile(fileOrBlob, overrideName = null) {
+        if (isOcrProcessing) return;
+
+        currentImageFile = fileOrBlob;
+        const name = overrideName || fileOrBlob.name || 'screenshot.png';
+        const size = fileOrBlob.size ? formatBytes(fileOrBlob.size) : 'Image';
+
+        // Setup image thumbnail preview
+        if (currentPreviewUrl) {
+            URL.revokeObjectURL(currentPreviewUrl);
+        }
+        currentPreviewUrl = URL.createObjectURL(fileOrBlob);
+        ocrPreviewImg.src = currentPreviewUrl;
+        ocrFileName.textContent = name;
+        ocrFileSize.textContent = size;
+
+        ocrDropzone.classList.add('hidden');
+        ocrPreviewCard.classList.remove('hidden');
+        ocrSuccessAlert.classList.add('hidden');
+
+        await runOcrOnImage(fileOrBlob);
+    }
+
+    async function runOcrOnImage(imageSource) {
+        if (typeof Tesseract === 'undefined') {
+            alert('Tesseract.js OCR library is still loading. Please check your internet connection and try again.');
+            return;
+        }
+
+        isOcrProcessing = true;
+        ocrProgressBox.classList.remove('hidden');
+        ocrProgressBar.style.width = '5%';
+        ocrPercentText.textContent = '5%';
+        ocrStatusText.innerHTML = '<span class="inline-block animate-spin">⏳</span> Initializing vision reader...';
+        ocrRescanBtn.disabled = true;
+
+        try {
+            const result = await Tesseract.recognize(
+                imageSource,
+                'eng',
+                {
+                    logger: (m) => {
+                        let pct = 10;
+                        if (m.progress) {
+                            pct = Math.min(100, Math.max(10, Math.round(m.progress * 100)));
+                        }
+
+                        ocrProgressBar.style.width = `${pct}%`;
+                        ocrPercentText.textContent = `${pct}%`;
+
+                        if (m.status === 'loading tesseract core') {
+                            ocrStatusText.innerHTML = '<span class="inline-block animate-spin">⏳</span> Loading OCR WebAssembly core...';
+                        } else if (m.status === 'loading language traineddata') {
+                            ocrStatusText.innerHTML = '<span class="inline-block animate-spin">⏳</span> Downloading trained English vision model...';
+                        } else if (m.status === 'initializing api') {
+                            ocrStatusText.innerHTML = '<span class="inline-block animate-spin">⏳</span> Preparing recognition engine...';
+                        } else if (m.status === 'recognizing text') {
+                            ocrStatusText.innerHTML = `<span class="inline-block animate-pulse">🔍</span> Scanning screenshot text... ${pct}%`;
+                        }
+                    }
+                }
+            );
+
+            const rawText = (result && result.data && result.data.text) ? result.data.text : '';
+            const cleanedText = cleanExtractedText(rawText);
+
+            ocrProgressBar.style.width = '100%';
+            ocrPercentText.textContent = '100%';
+
+            if (cleanedText.length > 0) {
+                messageInput.value = cleanedText;
+                ocrProgressBox.classList.add('hidden');
+                ocrSuccessAlert.classList.remove('hidden');
+                ocrCharCount.textContent = `Extracted ${cleanedText.length} characters from screenshot`;
+
+                // Flash textarea border to signal text has been imported
+                messageInput.classList.add('ring-2', 'ring-indigo-500');
+                setTimeout(() => messageInput.classList.remove('ring-2', 'ring-indigo-500'), 1500);
+            } else {
+                ocrStatusText.innerHTML = '⚠️ No readable text detected. Please ensure the screenshot is clear.';
+                ocrProgressBar.style.width = '0%';
+                ocrPercentText.textContent = '0%';
+            }
+
+        } catch (err) {
+            console.error('OCR Processing Error:', err);
+            ocrStatusText.innerHTML = `<span class="text-red-600">❌ Error extracting text: ${escapeHtml(err.message || 'Unknown error')}</span>`;
+        } finally {
+            isOcrProcessing = false;
+            ocrRescanBtn.disabled = false;
+        }
+    }
+
+    function cleanExtractedText(text) {
+        return text
+            .split('\n')
+            .map(line => line.trim())
+            .filter(line => line.length > 0)
+            .join(' ')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+    }
+
+    // --- REALISTIC SAMPLE SCREENSHOT GENERATOR (CANVAS TO BLOB) ---
+    sampleScreenshotBtn.addEventListener('click', async () => {
+        activateOcrTab();
+
+        // Draw an ultra-crisp mobile SMS screenshot on an offscreen canvas
+        const canvas = document.createElement('canvas');
+        canvas.width = 1000;
+        canvas.height = 680;
+        const ctx = canvas.getContext('2d');
+
+        // Background
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Header bar
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, 140);
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(0, 140);
+        ctx.lineTo(canvas.width, 140);
+        ctx.stroke();
+
+        // Status bar text
+        ctx.fillStyle = '#64748b';
+        ctx.font = '600 22px system-ui, -apple-system, sans-serif';
+        ctx.fillText('9:41 AM', 40, 45);
+        ctx.fillText('4G • 98%', 870, 45);
+
+        // Header Details
+        ctx.fillStyle = '#1e293b';
+        ctx.font = 'bold 32px system-ui, -apple-system, sans-serif';
+        ctx.fillText('GTBank-Alert', 140, 95);
+
+        // Sender Icon
+        ctx.fillStyle = '#e0e7ff';
+        ctx.beginPath();
+        ctx.arc(80, 85, 35, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#4f46e5';
+        ctx.font = 'bold 30px system-ui';
+        ctx.fillText('🏦', 65, 96);
+
+        // Date pill
+        ctx.fillStyle = '#e2e8f0';
+        ctx.beginPath();
+        ctx.roundRect(410, 180, 180, 40, 20);
+        ctx.fill();
+        ctx.fillStyle = '#64748b';
+        ctx.font = '500 20px system-ui';
+        ctx.fillText('Today 10:42 AM', 430, 207);
+
+        // Message Bubble
+        ctx.fillStyle = '#ffffff';
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.roundRect(40, 250, 920, 360, 24);
+        ctx.fill();
+        ctx.stroke();
+
+        // Scam Message Content
+        ctx.fillStyle = '#dc2626';
+        ctx.font = 'bold 28px system-ui, -apple-system, sans-serif';
+        ctx.fillText('GTBank Security Notice:', 80, 320);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '500 26px system-ui, -apple-system, sans-serif';
+        ctx.fillText('Your bank account has been suspended due to unverified BVN details.', 80, 375);
+        ctx.fillText('Kindly verify your BVN and OTP within 24 hours at:', 80, 425);
+
+        ctx.fillStyle = '#2563eb';
+        ctx.font = 'bold 26px system-ui, -apple-system, sans-serif';
+        ctx.fillText('http://gtb-secure-verify.xyz/login', 80, 480);
+
+        ctx.fillStyle = '#475569';
+        ctx.font = '500 25px system-ui, -apple-system, sans-serif';
+        ctx.fillText('Failure to update will lead to immediate total account restriction.', 80, 540);
+
+        canvas.toBlob(blob => {
+            if (blob) {
+                processImageFile(blob, 'sample_bank_scam_screenshot.png');
+            }
+        }, 'image/png');
+    });
+
+    // --- FORM SUBMISSION & HYBRID PIPELINE SCAN ---
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const message = messageInput.value.trim();
@@ -49,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <span class="text-lg">⏳</span>
                 <div>
                     <p class="font-semibold text-slate-800">Running Hybrid Pipeline...</p>
-                    <p class="text-xs text-slate-500">Executing rule engine and querying Groq LLM inference</p>
+                    <p class="text-xs text-slate-500">Executing deterministic rules and querying Groq LLM inference</p>
                 </div>
             </div>
         `;
