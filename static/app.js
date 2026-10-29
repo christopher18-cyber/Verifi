@@ -28,7 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const ocrCharCount = document.getElementById('ocr-char-count');
     const ocrRescanBtn = document.getElementById('ocr-rescan-btn');
     const ocrClearBtn = document.getElementById('ocr-clear-btn');
-    const sampleScreenshotBtn = document.getElementById('sample-screenshot-btn');
 
     let currentLang = 'en';
     let currentImageFile = null;
@@ -294,93 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/\s{2,}/g, ' ')
             .trim();
     }
-
-    // --- REALISTIC SAMPLE SCREENSHOT GENERATOR (CANVAS TO BLOB) ---
-    sampleScreenshotBtn.addEventListener('click', async () => {
-        activateOcrTab();
-
-        // Draw an ultra-crisp mobile SMS screenshot on an offscreen canvas
-        const canvas = document.createElement('canvas');
-        canvas.width = 1000;
-        canvas.height = 680;
-        const ctx = canvas.getContext('2d');
-
-        // Background
-        ctx.fillStyle = '#f8fafc';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        // Header bar
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, canvas.width, 140);
-        ctx.strokeStyle = '#e2e8f0';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(0, 140);
-        ctx.lineTo(canvas.width, 140);
-        ctx.stroke();
-
-        // Status bar text
-        ctx.fillStyle = '#64748b';
-        ctx.font = '600 22px system-ui, -apple-system, sans-serif';
-        ctx.fillText('9:41 AM', 40, 45);
-        ctx.fillText('4G • 98%', 870, 45);
-
-        // Header Details
-        ctx.fillStyle = '#1e293b';
-        ctx.font = 'bold 32px system-ui, -apple-system, sans-serif';
-        ctx.fillText('GTBank-Alert', 140, 95);
-
-        // Sender Icon
-        ctx.fillStyle = '#e0e7ff';
-        ctx.beginPath();
-        ctx.arc(80, 85, 35, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = '#4f46e5';
-        ctx.font = 'bold 30px system-ui';
-        ctx.fillText('🏦', 65, 96);
-
-        // Date pill
-        ctx.fillStyle = '#e2e8f0';
-        ctx.beginPath();
-        ctx.roundRect(410, 180, 180, 40, 20);
-        ctx.fill();
-        ctx.fillStyle = '#64748b';
-        ctx.font = '500 20px system-ui';
-        ctx.fillText('Today 10:42 AM', 430, 207);
-
-        // Message Bubble
-        ctx.fillStyle = '#ffffff';
-        ctx.strokeStyle = '#cbd5e1';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.roundRect(40, 250, 920, 360, 24);
-        ctx.fill();
-        ctx.stroke();
-
-        // Scam Message Content
-        ctx.fillStyle = '#dc2626';
-        ctx.font = 'bold 28px system-ui, -apple-system, sans-serif';
-        ctx.fillText('GTBank Security Notice:', 80, 320);
-
-        ctx.fillStyle = '#0f172a';
-        ctx.font = '500 26px system-ui, -apple-system, sans-serif';
-        ctx.fillText('Your bank account has been suspended due to unverified BVN details.', 80, 375);
-        ctx.fillText('Kindly verify your BVN and OTP within 24 hours at:', 80, 425);
-
-        ctx.fillStyle = '#2563eb';
-        ctx.font = 'bold 26px system-ui, -apple-system, sans-serif';
-        ctx.fillText('http://gtb-secure-verify.xyz/login', 80, 480);
-
-        ctx.fillStyle = '#475569';
-        ctx.font = '500 25px system-ui, -apple-system, sans-serif';
-        ctx.fillText('Failure to update will lead to immediate total account restriction.', 80, 540);
-
-        canvas.toBlob(blob => {
-            if (blob) {
-                processImageFile(blob, 'sample_bank_scam_screenshot.png');
-            }
-        }, 'image/png');
-    });
 
     // --- FORM SUBMISSION & HYBRID PIPELINE SCAN ---
     form.addEventListener('submit', async (e) => {
