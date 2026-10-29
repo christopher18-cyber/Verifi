@@ -136,7 +136,7 @@ uv pip install -r requirements.txt
 Create a .env file in the root directory:
 
 
-PORT=8000
+PORT=8001
 GROQ_API_KEY=your_api_key_here
 
 4.   Run the FastAPI server:
@@ -145,9 +145,9 @@ uv run python -m app.main
 
 5.   Access the Application:
 
-Web UI: Open http://localhost:8000
+Web UI: Open http://localhost:8001 (or the port logged in the console)
 
-Interactive API Docs (Swagger): Open http://localhost:8000/docs
+Interactive API Docs (Swagger): Open http://localhost:8001/docs
 
 🐳 Docker & Hugging Face Deployment
 Build and run locally using Docker:
