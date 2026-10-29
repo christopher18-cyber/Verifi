@@ -15,17 +15,23 @@ SHORTLINK_PATTERN = re.compile(
     re.IGNORECASE
 )
 URGENCY_PATTERN = re.compile(
-    r'\b(within 24 hours|immediate(?:ly)?|urgent(?:ly)?|final warning|today only|expires in|deactivated today|suspended)\b',
+    r'\b(within 24 hours|immediate(?:ly)?|urgent(?:ly)?|final warning|today only|expires in|deactivated today|suspended|'
+    r'sharp sharp|now now|quick quick|'
+    r'kia-kia|kiakia|pajawiri|laarin wakati|wakati 24|'
+    r'gaggawa|nan da nan|cikin sa\'o\'i|sa\'o\'i 24|'
+    r'ozugbo|ngwa ngwa|tupu awa|awa 24)\b',
     re.IGNORECASE
 )
 
-# Explicit phrase patterns for credential harvesting vs disclaimers
+# Explicit phrase patterns for credential harvesting vs disclaimers (English, Pidgin, Yoruba, Hausa, Igbo)
 CREDENTIAL_DEMAND_PATTERN = re.compile(
-    r'\b(send|verify|confirm|enter|update|provide|share)\b.*\b(otp|pin|bvn|password|card details)\b',
+    r'\b(send|verify|confirm|enter|update|provide|share|claim|te|tura|tinye|nyefee)\b.*'
+    r'\b(otp|pin|bvn|password|card details|lambar sirri|koodu)\b',
     re.IGNORECASE
 )
 DISCLAIMER_PATTERN = re.compile(
-    r'\b(never|do not|don\'t|will not)\b.*\b(share|give|disclose|send)\b',
+    r'\b(never|do not|don\'t|will not|no share|ma se so|ma fi han|kada ka bayyana|kada ka ba kowa|ekekwala|ekwula)\b.*'
+    r'\b(share|give|disclose|send|bayyana|kowa|tinye|nyefee)\b',
     re.IGNORECASE
 )
 

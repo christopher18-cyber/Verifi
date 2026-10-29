@@ -41,7 +41,9 @@ LLM Node: Evaluates intent, tone, and language context (English & Pidgin) when d
 🚀 Key Features
 Hybrid Evaluation Engine: Combines speed and zero-false-negative reliability from rule checks with deep semantic comprehension from open-weight models.
 
-Localized Context Awareness: Native detection for regional financial scams, loan-app contact shaming, and Pidgin social engineering.
+📸 Screenshot & Image OCR Scanning: Client-side optical character recognition via Tesseract.js. Users can drag-and-drop, browse, or directly paste (Ctrl+V) SMS or WhatsApp chat screenshots to extract and inspect text automatically without typing.
+
+🇳🇬 Multi-Lingual Defense (English, Pidgin, Yorùbá, Hausa, Igbo): Native detection and localized prompt analysis for regional financial threats, bank spoofing, loan-app contact shaming, and social engineering across Nigeria's major native languages, providing verdict explanations directly in the recipient's mother tongue.
 
 Explainable Verdicts: Provides a risk score (0–100), highlighted threat signals, and a plain-language explanation with recommended safe next steps.
 
@@ -136,7 +138,7 @@ uv pip install -r requirements.txt
 Create a .env file in the root directory:
 
 
-PORT=8000
+PORT=8001
 GROQ_API_KEY=your_api_key_here
 
 4.   Run the FastAPI server:
@@ -145,9 +147,9 @@ uv run python -m app.main
 
 5.   Access the Application:
 
-Web UI: Open http://localhost:8000
+Web UI: Open http://localhost:8001 (or the port logged in the console)
 
-Interactive API Docs (Swagger): Open http://localhost:8000/docs
+Interactive API Docs (Swagger): Open http://localhost:8001/docs
 
 🐳 Docker & Hugging Face Deployment
 Build and run locally using Docker:
