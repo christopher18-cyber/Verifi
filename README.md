@@ -43,7 +43,7 @@ Hybrid Evaluation Engine: Combines speed and zero-false-negative reliability fro
 
 📸 Screenshot & Image OCR Scanning: Client-side optical character recognition via Tesseract.js. Users can drag-and-drop, browse, or directly paste (Ctrl+V) SMS or WhatsApp chat screenshots to extract and inspect text automatically without typing.
 
-Localized Context Awareness: Native detection for regional financial scams, loan-app contact shaming, and Pidgin social engineering.
+🇳🇬 Multi-Lingual Defense (English, Pidgin, Yorùbá, Hausa, Igbo): Native detection and localized prompt analysis for regional financial threats, bank spoofing, loan-app contact shaming, and social engineering across Nigeria's major native languages, providing verdict explanations directly in the recipient's mother tongue.
 
 Explainable Verdicts: Provides a risk score (0–100), highlighted threat signals, and a plain-language explanation with recommended safe next steps.
 

@@ -114,32 +114,44 @@
                     </div>
 
                     <!-- Language & Submit Row -->
-                    <div class="flex items-center justify-between gap-2">
-                        <div class="flex bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-medium">
-                            <button type="button" class="lang-btn px-3 py-1.5 rounded-lg bg-white shadow-sm text-slate-900" data-lang="en">English</button>
-                            <button type="button" class="lang-btn px-3 py-1.5 rounded-lg text-slate-500 hover:text-slate-900" data-lang="pidgin">Pidgin</button>
+                    <div class="space-y-3 pt-1">
+                        <div>
+                            <span class="text-[11px] font-bold text-slate-500 uppercase tracking-wider block mb-1.5">Verdict Language:</span>
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex flex-wrap bg-slate-100 p-1 rounded-xl border border-slate-200 text-xs font-semibold gap-1" id="language-switcher">
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg bg-white shadow-sm text-slate-900 transition" data-lang="en">English</button>
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition" data-lang="pidgin">🇳🇬 Pidgin</button>
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition" data-lang="yoruba">Yorùbá</button>
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition" data-lang="hausa">Hausa</button>
+                                    <button type="button" class="lang-btn px-2.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition" data-lang="igbo">Igbo</button>
+                                </div>
+                                <button
+                                    type="submit"
+                                    id="submit-btn"
+                                    class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-6 rounded-xl transition duration-200 text-sm shadow-md">
+                                    Check message
+                                </button>
+                            </div>
                         </div>
-                        <button
-                            type="submit"
-                            id="submit-btn"
-                            class="bg-slate-900 hover:bg-slate-800 text-white font-semibold py-2.5 px-6 rounded-xl transition duration-200 text-sm shadow-md">
-                            Check message
-                        </button>
                     </div>
                 </form>
 
                 <!-- Sample Buttons -->
                 <div class="space-y-2 pt-2 border-t border-slate-100">
                     <div class="flex items-center justify-between">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Try sample messages:</p>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Try localized samples:</p>
                         <button type="button" id="sample-screenshot-btn" class="text-xs bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-2.5 py-1 rounded-lg border border-indigo-200 font-semibold transition flex items-center gap-1 shadow-2xs">
                             <span>📸</span> Sample Screenshot
                         </button>
                     </div>
-                    <div class="flex flex-wrap gap-2">
-                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200 transition" data-msg="GTBank Alert: Your account has been suspended. Verify your BVN and OTP within 24 hours: http://gtb-secure-verify.xyz/login">Fake bank alert</button>
-                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200 transition" data-msg="CONGRATULATIONS! Your loan of N200,000 has been approved instantly without collateral. Click here to claim now: https://quickcash-ng.live">Loan-app threat</button>
-                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg border border-slate-200 transition" data-msg="Debit alert: N5,000.00 left your account on 24-Oct. Never share your OTP or PIN with anyone, including bank staff.">Genuine alert</button>
+                    <div class="flex flex-wrap gap-1.5">
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="en" data-msg="GTBank Alert: Your account has been suspended. Verify your BVN and OTP within 24 hours: http://gtb-secure-verify.xyz/login">🇬🇧 Bank Alert (EN)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="pidgin" data-msg="Abeg sharp sharp: Your OPay account don get issue. Click here quickly to confirm your BVN make your money no hang: http://opay-verify-ng.top">🇳🇬 OPay Phish (Pidgin)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="yoruba" data-msg="Ifitonile Pataki: A ti ti akanti banki yin pa nitori aito BVN. Tesiwaju lati te OTP ati BVN re si https://gtb-update-portal.xyz/login laarin wakati 24 lati tun se.">🇳🇬 BVN Fake (Yorùbá)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="hausa" data-msg="Sanarwa daga Banki: An dakatar da asusunka saboda rashin inganta BVN. Da fatan za a tura lambar sirri (OTP) a http://gtb-update-portal.xyz/login a cikin sa'o'i 24.">🇳🇬 Bank Threat (Hausa)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="igbo" data-msg="Ozi di mkpa: E mechiri akauntu gi n'ihi nsogbu BVN. Biko tinye BVN na koodu OTP gi ozugbo na http://gtb-update-portal.xyz/login tupu awa 24 agwụcha.">🇳🇬 Akauntu Phish (Igbo)</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="en" data-msg="CONGRATULATIONS! Your loan of N200,000 has been approved instantly without collateral. Click here to claim now: https://quickcash-ng.live">Loan-app threat</button>
+                        <button type="button" class="sample-btn text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 px-2.5 py-1.5 rounded-lg border border-slate-200 transition" data-lang="en" data-msg="Debit alert: N5,000.00 left your account on 24-Oct. Never share your OTP or PIN with anyone, including bank staff.">Genuine alert</button>
                     </div>
                 </div>
 

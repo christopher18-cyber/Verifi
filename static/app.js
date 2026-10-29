@@ -55,23 +55,43 @@ document.addEventListener('DOMContentLoaded', () => {
     tabTextBtn.addEventListener('click', activateTextTab);
     tabOcrBtn.addEventListener('click', activateOcrTab);
 
-    // --- LANGUAGE SWITCHER ---
-    document.querySelectorAll('.lang-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            document.querySelectorAll('.lang-btn').forEach(b => {
+    // --- LANGUAGE SWITCHER & MULTI-LINGUAL SUPPORT ---
+    const LANG_LABELS = {
+        'en': 'English',
+        'pidgin': 'Nigerian Pidgin',
+        'yoruba': 'Yorùbá',
+        'hausa': 'Hausa',
+        'igbo': 'Igbo'
+    };
+
+    function setLanguage(lang) {
+        currentLang = lang;
+        document.querySelectorAll('.lang-btn').forEach(b => {
+            if (b.getAttribute('data-lang') === lang) {
+                b.classList.add('bg-white', 'shadow-sm', 'text-slate-900');
+                b.classList.remove('text-slate-500');
+            } else {
                 b.classList.remove('bg-white', 'shadow-sm', 'text-slate-900');
                 b.classList.add('text-slate-500');
-            });
-            e.target.classList.add('bg-white', 'shadow-sm', 'text-slate-900');
-            e.target.classList.remove('text-slate-500');
-            currentLang = e.target.getAttribute('data-lang');
+            }
+        });
+    }
+
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const lang = e.currentTarget.getAttribute('data-lang');
+            setLanguage(lang);
         });
     });
 
     // --- TEXT SAMPLE BUTTONS ---
     document.querySelectorAll('.sample-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            messageInput.value = e.target.getAttribute('data-msg');
+            messageInput.value = e.currentTarget.getAttribute('data-msg');
+            const sampleLang = e.currentTarget.getAttribute('data-lang');
+            if (sampleLang) {
+                setLanguage(sampleLang);
+            }
             activateTextTab();
             messageInput.focus();
         });
@@ -376,12 +396,13 @@ document.addEventListener('DOMContentLoaded', () => {
         detailsBox.classList.add('hidden');
 
         // Render Active Pipeline Animation State
+        const langName = LANG_LABELS[currentLang] || currentLang;
         pipelineSteps.innerHTML = `
             <div class="flex items-start space-x-3 text-indigo-600 animate-pulse">
                 <span class="text-lg">⏳</span>
                 <div>
                     <p class="font-semibold text-slate-800">Running Hybrid Pipeline...</p>
-                    <p class="text-xs text-slate-500">Executing deterministic rules and querying Groq LLM inference</p>
+                    <p class="text-xs text-slate-500">Executing deterministic rules and querying Groq AI (${langName} reasoning)</p>
                 </div>
             </div>
         `;
@@ -402,8 +423,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="flex items-start space-x-3 text-emerald-600">
                     <span class="text-lg">✅</span>
                     <div>
-                        <p class="font-semibold text-slate-800">Pipeline Completed Successfully</p>
-                        <p class="text-xs text-slate-500">Cleaned -> Rule Checked -> AI Evaluated -> Verdict Merged</p>
+                        <p class="font-semibold text-slate-800">Pipeline Completed (${langName})</p>
+                        <p class="text-xs text-slate-500">Cleaned -> Rule Checked -> AI Evaluated (${langName}) -> Verdict Merged</p>
                     </div>
                 </div>
             `;
